@@ -79,7 +79,7 @@ router.post("/register", (req, res) => {
           }
         });
         var mailOptions = {
-          from: "naeemfaheem007@gmail.com",
+          from: "no-reply@devconnectorfreelancer.herokuapp.com",
           to: user.email,
           subject: "Account Verification Token",
           text:
