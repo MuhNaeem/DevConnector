@@ -74,8 +74,8 @@ router.post("/register", (req, res) => {
         var transporter = nodemailer.createTransport({
           service: "Sendgrid",
           auth: {
-            user: process.env.SENDGRID_USERNAME,
-            pass: process.env.SENDGRID_PASSWORD
+            user: "naeemfaheem010@gmail.com",
+            pass: "meharoom393"
           }
         });
         var mailOptions = {
