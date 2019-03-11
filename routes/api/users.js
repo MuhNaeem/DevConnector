@@ -15,7 +15,7 @@ const validateLoginInput = require("../../validation/login");
 
 // Load User model
 const User = require("../../models/User");
-
+const Veri = require("../../models/Veri");
 // @route   GET api/users/test
 // @desc    Tests users route
 // @access  Public
@@ -61,7 +61,7 @@ router.post("/register", (req, res) => {
         });
       });
       // Create a verification token for this user
-      const token = new Token({
+      const token = new Veri({
         _userId: user._id,
         token: crypto.randomBytes(16).toString("hex")
       });
