@@ -71,14 +71,14 @@ router.post("/register", (req, res) => {
           return res.status(500).send({ msg: err.message });
         }
         // Send the email
-        var transporter = nodemailer.createTransport({
+        const transporter = nodemailer.createTransport({
           service: "Sendgrid",
           auth: {
             user: "process.env.SENDGRID_USERNAME",
             pass: "process.env.SENDGRID_PASSWORD"
           }
         });
-        var mailOptions = {
+        const mailOptions = {
           from: "no-reply@devconnectorfreelancer.herokuapp.com",
           to: user.email,
           subject: "Account Verification Token",
