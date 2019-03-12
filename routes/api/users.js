@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
+const sgTransport = require("nodemailer-sendgrid-transport");
 
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
@@ -16,6 +17,14 @@ const validateLoginInput = require("../../validation/login");
 // Load User model
 const User = require("../../models/User");
 const Veri = require("../../models/Veri");
+
+const options = {
+  auth: {
+    api_user: "MuhNaeem",
+    api_key: "prodev123"
+  }
+};
+
 // @route   GET api/users/test
 // @desc    Tests users route
 // @access  Public
@@ -54,49 +63,52 @@ router.post("/register", (req, res) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
           if (err) throw err;
           newUser.password = hash;
-          newUser
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-        });
-      });
-      // Create a verification token for this user
-      const token = new Veri({
-        _userId: user._id,
-        token: crypto.randomBytes(16).toString("hex")
-      });
-      // Save the verification token
-      token.save(function(err) {
-        if (err) {
-          return res.status(500).send({ msg: err.message });
-        }
-        // Send the email
-        const transporter = nodemailer.createTransport({
-          service: "Gmail",
-          auth: {
-            user: "naeemfaheem010@gmail.com",
-            pass: "meharoom393"
-          }
-        });
-        const mailOptions = {
-          from: "no-reply@devconnectorfreelancer.herokuapp.com",
-          to: user.email,
-          subject: "Account Verification Token",
-          text:
-            "Hello,\n\n" +
-            "Please verify your account by clicking the link: \nhttp://" +
-            req.headers.host +
-            "/confirmation/" +
-            token.token +
-            ".\n"
-        };
-        transporter.sendMail(mailOptions, function(err) {
-          if (err) {
-            return res.status(500).send({ msg: err.message });
-          }
-          res
-            .status(200)
-            .send("A verification email has been sent to " + user.email + ".");
+          newUser.save(function(err) {
+            if (err) {
+              return res.status(500).send({ msg: err.message });
+            }
+            //Create a verification token for this user
+            const token = new Veri({
+              _userId: newUser.id,
+              token: crypto.randomBytes(16).toString("hex")
+            });
+
+            token.save(function(err) {
+              if (err) {
+                return res.status(500).send({ msg: err.message });
+              }
+              // Send the email
+              const transporter = nodemailer.createTransport(
+                sgTransport(options)
+              );
+              const mailOptions = {
+                from: "no-reply@devconnectorfreelancer.herokuapp.com",
+                to: newUser.email,
+                subject: "Account Verification Token",
+                text:
+                  "Hello,\n\n" +
+                  "Please verify your account by clicking the link: \nhttp://" +
+                  req.headers.host +
+                  "/confirmation/" +
+                  token.token +
+                  ".\n"
+              };
+              transporter.sendMail(mailOptions, function(err) {
+                if (err) {
+                  return res.status(500).send({ msg: err.message });
+                }
+                res
+                  .status(200)
+                  .send(
+                    "A verification email has been sent to " +
+                      newUser.email +
+                      "."
+                  );
+              });
+            }); //loop-end
+          });
+          // .then(user => res.json(user))
+          // .catch(err => console.log(err));
         });
       });
     }
@@ -172,7 +184,7 @@ router.get(
 // @route   POST api/users/confirmation
 // @desc    Register user after confirmation of their accounts
 // @access  Public
-router.post("/confirmation", (req, res) => {
+router.get("/confirmation", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   // Check Validation
