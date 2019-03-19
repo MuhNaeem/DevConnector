@@ -89,7 +89,7 @@ router.post("/register", (req, res) => {
                   "Hello,\n\n" +
                   "Please verify your account by clicking the link: \nhttp://" +
                   req.headers.host +
-                  "/confirmation/" +
+                  "api/users/confirmation/" +
                   token.token +
                   ".\n"
               };
@@ -181,21 +181,14 @@ router.get(
   }
 );
 
-// @route   POST api/users/confirmation
+// @route   POST api/users/confirmation/:id
 // @desc    Register user after confirmation of their accounts
 // @access  Public
-router.get("/confirmation", (req, res) => {
-  const { errors, isValid } = validateRegisterInput(req.body);
-
-  // Check Validation
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  Token.findOne({ token: req.body.token }).then(token => {
+router.get("/confirmation/:token", (req, res) => {
+  Veri.findOne({ token: req.body.token }).then(token => {
     if (!token) {
       errors.email =
-        "We were unable to find a valid token. Your token my have expired";
+        "We were unable to find a valid token. Your token may have expired";
       return res.status(400).json(errors);
     }
     User.findOne({ _id: token._userId, email: req.body.email }).then(user => {
@@ -218,6 +211,4 @@ router.get("/confirmation", (req, res) => {
 // @desc    Register user
 // @access  Public
 
-router.post("/confirmation", (req, res) => res.json({ msg: "Users Works" }));
-router.post("/resend", (req, res) => res.json({ msg: "Users Works" }));
 module.exports = router;
