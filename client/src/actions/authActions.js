@@ -19,7 +19,7 @@ export const registerUser = (userData, history) => dispatch => {
 
 export const verifyUser = tokken => dispatch => {
   axios
-    .get(`/api/users/confirmation/${id}`)
+    .get(`/api/users/confirmation/${tokken}`)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
