@@ -87,7 +87,7 @@ router.post("/register", (req, res) => {
                 subject: "Account Verification Token",
                 text:
                   "Hello,\n\n" +
-                  "Please verify your account by clicking the link: \n" +
+                  "Please verify your account by clicking the link:  \n" +
                   req.headers.host +
                   "/confirmation/" +
                   token.token +

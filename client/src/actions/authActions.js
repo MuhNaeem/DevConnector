@@ -17,9 +17,9 @@ export const registerUser = (userData, history) => dispatch => {
     );
 };
 
-export const verifyUser = (userData, history) => dispatch => {
+export const verifyUser = tokken => dispatch => {
   axios
-    .post("/api/users/confirmation", userData)
+    .get(`/api/users/confirmation/${id}`)
     .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
