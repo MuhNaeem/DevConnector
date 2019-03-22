@@ -184,7 +184,7 @@ router.get(
 // @route   POST api/users/confirmation/:id
 // @desc    Register user after confirmation of their accounts
 // @access  Public
-router.get("/confirmation/:token", (req, res) => {
+router.post("/confirmation/:token", (req, res) => {
   Veri.findOne({ token: req.body.token }).then(token => {
     if (!token) {
       errors.email =
