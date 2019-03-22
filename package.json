@@ -43,6 +43,7 @@
     "react-scripts": "^2.1.8",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "socket.io": "^2.2.0",
     "validator": "^9.4.1"
   },
   "devDependencies": {

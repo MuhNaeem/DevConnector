@@ -62,7 +62,11 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/Verify" component={Verify} />
-              <Route exact path="/confirmed" component={Confirmation} />
+              <Route
+                exact
+                path="/confirmation/:token"
+                component={Confirmation}
+              />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profiles" component={Profiles} />
               <Route exact path="/profile/:handle" component={Profile} />

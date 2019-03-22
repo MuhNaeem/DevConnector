@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { verifyUser } from "../../actions/authActions";
 
 class Confirmation extends Component {
   constructor() {
@@ -55,4 +56,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps)(withRouter(Confirmation));
+export default connect(
+  mapStateToProps,
+  { verifyUser }
+)(withRouter(Confirmation));

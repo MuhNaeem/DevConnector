@@ -20,7 +20,7 @@ export const registerUser = (userData, history) => dispatch => {
 export const verifyUser = token => dispatch => {
   axios
     .get(`/api/users/confirmation/${token}`)
-    .then(res => history.push("/confirmed"))
+    .then(res => history.push("/login"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
