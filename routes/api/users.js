@@ -207,8 +207,4 @@ router.post("/confirmation/:token", (req, res) => {
   });
 });
 
-// @route   POST api/users/verification
-// @desc    Register user
-// @access  Public
-
 module.exports = router;
