@@ -3,12 +3,15 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { addComment } from "../../actions/postActions";
+import TextFieldGroup from "../common/TextFieldGroup";
 
 class CommentForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       text: "",
+      rate: 5,
+      days: 1,
       errors: {}
     };
 
@@ -30,12 +33,16 @@ class CommentForm extends Component {
 
     const newComment = {
       text: this.state.text,
+      rate: this.state.rate,
+      days: this.state.days,
       name: user.name,
       avatar: user.avatar
     };
 
     this.props.addComment(postId, newComment);
     this.setState({ text: "" });
+    this.setState({ rate: 5 });
+    this.setState({ days: 1 });
   }
 
   onChange(e) {
@@ -49,7 +56,7 @@ class CommentForm extends Component {
       <div className="post-form mb-3">
         <div className="card card-info">
           <div className="card-header bg-info text-white">
-            Make a comment...
+            State your proposal...
           </div>
           <div className="card-body">
             <form onSubmit={this.onSubmit}>
@@ -60,6 +67,24 @@ class CommentForm extends Component {
                   value={this.state.text}
                   onChange={this.onChange}
                   error={errors.text}
+                />
+                <TextFieldGroup
+                  placeholder="Rate"
+                  name="rate"
+                  type="number"
+                  value={this.state.rate}
+                  onChange={this.onChange}
+                  error={errors.rate}
+                  info="State the amount you will pay"
+                />
+                <TextFieldGroup
+                  placeholder="Total days"
+                  name="days"
+                  type="number"
+                  value={this.state.days}
+                  onChange={this.onChange}
+                  error={errors.days}
+                  info="Total days your project rquires"
                 />
               </div>
               <button type="submit" className="btn btn-dark">

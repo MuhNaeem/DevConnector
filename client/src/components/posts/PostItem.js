@@ -45,10 +45,18 @@ class PostItem extends Component {
             <p className="text-center">{post.name}</p>
           </div>
           <div className="col-md-10">
-            <p className="lead">{post.text}</p>
-            <p className="lead">{post.rate}</p>
-            <p className="lead">{post.dateFrom}</p>
-            <p className="lead">{post.dateTo}</p>
+            <p className="lead">
+              <h2>Description of projet:</h2>
+              {post.text}
+            </p>
+            <p className="lead">
+              <h2>Rate:</h2>
+              {post.rate + "$"}
+            </p>
+            <p className=" lead">
+              <h2>Days:</h2>
+              {post.days + " days"}
+            </p>
 
             {showActions ? (
               <span>
@@ -72,7 +80,7 @@ class PostItem extends Component {
                   <i className="text-secondary fas fa-thumbs-down" />
                 </button>
                 <Link to={`/post/${post._id}`} className="btn btn-info mr-1">
-                  Comments
+                  Proposal
                 </Link>
                 {post.user === auth.user.id ? (
                   <button

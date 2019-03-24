@@ -4,15 +4,15 @@ import { connect } from "react-redux";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { addPost } from "../../actions/postActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+//import NumericInput from "react-numeric-input";
 
 class PostForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       text: "",
-      rate: "",
-      dateFrom: "",
-      dateTo: "",
+      rate: 5,
+      days: 1,
       errors: {}
     };
 
@@ -34,17 +34,15 @@ class PostForm extends Component {
     const newPost = {
       text: this.state.text,
       rate: this.state.rate,
-      dateFrom: this.state.dateFrom,
-      dateTo: this.state.dateTo,
+      days: this.state.days,
       name: user.name,
       avatar: user.avatar
     };
 
     this.props.addPost(newPost);
     this.setState({ text: "" });
-    this.setState({ rate: "" });
-    this.setState({ dateFrom: "" });
-    this.setState({ dateTo: "" });
+    this.setState({ rate: 5 });
+    this.setState({ days: 1 });
   }
 
   onChange(e) {
@@ -67,29 +65,33 @@ class PostForm extends Component {
                   value={this.state.text}
                   onChange={this.onChange}
                   error={errors.text}
+                  info="Description related to your project"
                 />
                 <TextFieldGroup
                   placeholder="Rate"
                   name="rate"
+                  type="number"
                   value={this.state.rate}
                   onChange={this.onChange}
                   error={errors.rate}
+                  info="State the amount you will pay"
                 />
-                <h6>Starting Date</h6>
-                <TextFieldGroup
-                  name="from"
-                  type="date"
-                  value={this.state.dateFrom}
+                {/* <NumericInput
+                  className="form-control"
+                  min={0}
+                  max={100}
+                  value={this.state.days}
                   onChange={this.onChange}
-                  error={errors.dateFrom}
-                />
-                <h6>Ending Date</h6>
+                  error={errors.days}
+                /> */}
                 <TextFieldGroup
-                  name="to"
-                  type="date"
-                  value={this.state.dateTo}
+                  placeholder="Total days"
+                  name="days"
+                  type="number"
+                  value={this.state.days}
                   onChange={this.onChange}
-                  error={errors.dateTo}
+                  error={errors.days}
+                  info="Total days your project rquires"
                 />
               </div>
               <button type="submit" className="btn btn-dark">

@@ -55,8 +55,7 @@ router.post(
     const newPost = new Post({
       text: req.body.text,
       rate: req.body.rate,
-      dateFrom: req.body.dateFrom,
-      dateTo: req.body.dateTo,
+      days: req.body.days,
       name: req.body.name,
       avatar: req.body.avatar,
       user: req.user.id
@@ -175,6 +174,8 @@ router.post(
         const newComment = {
           text: req.body.text,
           name: req.body.name,
+          rate: req.body.rate,
+          days: req.body.days,
           avatar: req.body.avatar,
           user: req.user.id
         };

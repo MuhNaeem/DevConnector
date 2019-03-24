@@ -18,15 +18,11 @@ const PostSchema = new Schema({
     type: String
   },
   rate: {
-    type: String,
+    type: Number,
     required: true
   },
-  dateFrom: {
-    type: Date,
-    required: true
-  },
-  dateTo: {
-    type: Date,
+  days: {
+    type: Number,
     required: true
   },
 
@@ -53,6 +49,14 @@ const PostSchema = new Schema({
       },
       avatar: {
         type: String
+      },
+      rate: {
+        type: Number,
+        required: true
+      },
+      days: {
+        type: Number,
+        required: true
       },
       date: {
         type: Date,
