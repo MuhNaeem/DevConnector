@@ -13,7 +13,7 @@ class PostForm extends Component {
       text: "",
       rate: 5,
       days: 1,
-      errors: {}
+      errors: {} 
     };
 
     this.onChange = this.onChange.bind(this);

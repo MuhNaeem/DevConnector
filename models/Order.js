@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // Create Schema
-const PostSchema = new Schema({
+const OrderSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: "users"
@@ -26,15 +26,7 @@ const PostSchema = new Schema({
     required: true
   },
 
-  likes: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      }
-    }
-  ],
-  comments: [
+  client: [
     {
       user: {
         type: Schema.Types.ObjectId,
@@ -49,27 +41,7 @@ const PostSchema = new Schema({
       },
       avatar: {
         type: String
-      },
-      rate: {
-        type: Number,
-        required: true
-      },
-      days: {
-        type: Number,
-        required: true
-      },
-      date: {
-        type: Date,
-        default: Date.now
-      },
-      likes: [
-        {
-          user: {
-            type: Schema.Types.ObjectId,
-            ref: "users"
-          }
-        }
-      ]
+      }
     }
   ],
   date: {
@@ -78,4 +50,4 @@ const PostSchema = new Schema({
   }
 });
 
-module.exports = Post = mongoose.model("post", PostSchema);
+module.exports = Order = mongoose.model("order", OrderSchema);

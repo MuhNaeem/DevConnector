@@ -122,37 +122,37 @@ router.post(
 // @route   POST api/posts/unlike/:id
 // @desc    Unlike post
 // @access  Private
-router.post(
-  "/unlike/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Profile.findOne({ user: req.user.id }).then(profile => {
-      Post.findById(req.params.id)
-        .then(post => {
-          if (
-            post.likes.filter(like => like.user.toString() === req.user.id)
-              .length === 0
-          ) {
-            return res
-              .status(400)
-              .json({ notliked: "You have not yet liked this post" });
-          }
+// router.post(
+//   "/unlike/:id",
+//   passport.authenticate("jwt", { session: false }),
+//   (req, res) => {
+//     Profile.findOne({ user: req.user.id }).then(profile => {
+//       Post.findById(req.params.id)
+//         .then(post => {
+//           if (
+//             post.likes.filter(like => like.user.toString() === req.user.id)
+//               .length === 0
+//           ) {
+//             return res
+//               .status(400)
+//               .json({ notliked: "You have not yet liked this post" });
+//           }
 
-          // Get remove index
-          const removeIndex = post.likes
-            .map(item => item.user.toString())
-            .indexOf(req.user.id);
+//           // Get remove index
+//           const removeIndex = post.likes
+//             .map(item => item.user.toString())
+//             .indexOf(req.user.id);
 
-          // Splice out of array
-          post.likes.splice(removeIndex, 1);
+//           // Splice out of array
+//           post.likes.splice(removeIndex, 1);
 
-          // Save
-          post.save().then(post => res.json(post));
-        })
-        .catch(err => res.status(404).json({ postnotfound: "No post found" }));
-    });
-  }
-);
+//           // Save
+//           post.save().then(post => res.json(post));
+//         })
+//         .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+//     });
+//   }
+// );
 
 // @route   POST api/posts/comment/:id
 // @desc    Add comment to post
@@ -169,24 +169,39 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    Post.findById(req.params.id)
-      .then(post => {
-        const newComment = {
-          text: req.body.text,
-          name: req.body.name,
-          rate: req.body.rate,
-          days: req.body.days,
-          avatar: req.body.avatar,
-          user: req.user.id
-        };
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      Post.findById(req.params.id)
+        .then(post => {
+          const newComment = {
+            text: req.body.text,
+            name: req.body.name,
+            rate: req.body.rate,
+            days: req.body.days,
+            avatar: req.body.avatar,
+            user: req.user.id
+          };
 
-        // Add to comments array
-        post.comments.unshift(newComment);
+          // Add to comments array
+          post.comments.unshift(newComment);
 
-        // Save
-        post.save().then(post => res.json(post));
-      })
-      .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+          // Add to already sent list
+          if (
+            post.likes.filter(like => like.user.toString() === req.user.id)
+              .length > 0
+          ) {
+            return res
+              .status(400)
+              .json({ alreadySent: "User has already sent a proposal" });
+          }
+
+          // Add user id to likes array
+          post.likes.unshift({ user: req.user.id });
+
+          // Save
+          post.save().then(post => res.json(post));
+        })
+        .catch(err => res.status(404).json({ postnotfound: "No post found" }));
+    });
   }
 );
 

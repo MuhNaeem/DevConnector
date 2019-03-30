@@ -15,6 +15,7 @@ import Footer from "./components/layout/Footer";
 import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Verify from "./components/auth/Verify";
+import Chat from "./components/chat/Chat";
 import Confirmation from "./components/auth/Confirmation";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
@@ -100,6 +101,9 @@ class App extends Component {
                   path="/add-education"
                   component={AddEducation}
                 />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/chat" component={Chat} />
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/feed" component={Posts} />

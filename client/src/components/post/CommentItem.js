@@ -8,6 +8,15 @@ class CommentItem extends Component {
     this.props.deleteComment(postId, commentId);
   }
 
+  // findUserSent(likes) {
+  //   const { auth } = this.props;
+  //   if (likes.filter(like => like.user === auth.user.id).length > 0) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
   render() {
     const { comment, postId, auth } = this.props;
 

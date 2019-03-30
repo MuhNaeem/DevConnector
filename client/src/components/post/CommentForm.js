@@ -5,6 +5,8 @@ import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 import { addComment } from "../../actions/postActions";
 import TextFieldGroup from "../common/TextFieldGroup";
 
+//import classnames from "classnames";
+
 class CommentForm extends Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,25 @@ class CommentForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  // findUserSent(likes) {
+  //   const { auth } = this.props;
+  //   if (likes.filter(like => like.user === auth.user.id).length > 0) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // isDisabled() {
+  //   const { post } = this.props;
+  //   const { auth } = this.props;
+  //   const like = post.likes;
+  //   if (like.filter(like => like.user === auth.user.id).length > 0) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
   componentWillReceiveProps(newProps) {
     if (newProps.errors) {
       this.setState({ errors: newProps.errors });
@@ -50,6 +71,7 @@ class CommentForm extends Component {
   }
 
   render() {
+    //const { post } = this.props;
     const { errors } = this.state;
 
     return (
@@ -87,7 +109,12 @@ class CommentForm extends Component {
                   info="Total days your project rquires"
                 />
               </div>
-              <button type="submit" className="btn btn-dark">
+
+              <button
+                type="submit"
+                /* disabled={this.isDisabled()} */
+                className="btn btn-dark"
+              >
                 Submit
               </button>
             </form>
