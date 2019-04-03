@@ -34,16 +34,22 @@ class Confirmation extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+    const token = this.props.match.params.token;
 
     const verifyEmail = {
       email: this.state.email
     };
 
-    this.props.verifyUser(verifyEmail, this.props.token, this.props.history);
+    this.props.verifyUser(verifyEmail, token, this.props.history);
   }
 
   render() {
+    console.log(this.props.match.params.token);
+    console.log(this.props.location.pathname);
+
     const { errors } = this.state;
+    console.log("");
+    //const { token } = this.props;
     return (
       <div className="confirmation">
         <div className="container">
@@ -72,6 +78,7 @@ class Confirmation extends Component {
 
 Confirmation.propTypes = {
   auth: PropTypes.object.isRequired,
+  verifyUser: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 };
 

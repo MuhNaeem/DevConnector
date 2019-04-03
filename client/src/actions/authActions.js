@@ -18,6 +18,7 @@ export const registerUser = (userData, history) => dispatch => {
 };
 
 export const verifyUser = (verifyEmail, token, history) => dispatch => {
+  console.log(token, verifyEmail);
   axios
     .post(`/api/users/confirmation/${token}`, verifyEmail)
     .then(res => history.push("/login"))

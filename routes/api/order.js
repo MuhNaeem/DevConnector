@@ -33,6 +33,6 @@ router.get("/:id", (req, res) => {
   Order.findById(req.params.id)
     .then(order => res.json(order))
     .catch(err =>
-      res.status(404).json({ nopostfound: "No post found with that ID" })
+      res.status(404).json({ noorderfound: "No order found with that ID" })
     );
 });

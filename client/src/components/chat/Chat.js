@@ -17,6 +17,8 @@ import PropTypes from "prop-types";
 //import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+//import io from "socket.io-client";
+
 import axios from "axios";
 
 class Chat extends Component {
@@ -26,6 +28,8 @@ class Chat extends Component {
       modal: false,
       chatLists: []
     };
+
+    //this.socket = io("localhost:8080");
   }
 
   componentDidMount() {

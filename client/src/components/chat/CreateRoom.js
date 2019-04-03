@@ -13,6 +13,8 @@ import {
 
 import axios from "axios";
 
+//import io from "socket.io-client";
+
 class CreateRoom extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +23,7 @@ class CreateRoom extends Component {
       roomTitle: "",
       createdBy: ""
     };
+    //this.socket = io("localhost:8080");
 
     this.toggle = this.toggle.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);

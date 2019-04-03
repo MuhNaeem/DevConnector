@@ -89,9 +89,9 @@ router.post("/register", (req, res) => {
                   "Hello,\n\n" +
                   "Please verify your account by clicking the link:  \n" +
                   req.headers.host +
-                  "/confirmation/" +
+                  "localhost:3000/confirmation/" +
                   token.token +
-                  ".\n"
+                  "\n"
               };
               transporter.sendMail(mailOptions, function(err) {
                 if (err) {
@@ -185,26 +185,34 @@ router.get(
 // @desc    Register user after confirmation of their accounts
 // @access  Public
 router.post("/confirmation/:token", (req, res) => {
-  Veri.findOne({ token: req.body.token }).then(token => {
-    if (!token) {
-      errors.email =
-        "We were unable to find a valid token. Your token may have expired";
-      return res.status(400).json(errors);
-    }
-    User.findOne({ _id: token._userId, email: req.body.email }).then(user => {
-      if (!user) {
-        errors.email = "We were unable to find a user for this token";
+  const { errors } = validateLoginInput(req.body);
+  const tok = req.params.token;
+  console.log(tok);
+  Veri.findOne({ token: req.params.token })
+    .then(token => {
+      if (!token) {
+        errors.email =
+          "We were unable to find a valid token. Your token may have expired";
+        console.log(token);
         return res.status(400).json(errors);
       }
-      if (user.isVerified) {
-        errors.email = "This user has already been verified";
-        return res.status(400).json(errors);
-      }
-      // Verify and save the user
-      user.isVerified = true;
-      user.save().then(user => res.json(user));
+      User.findOne({ _id: token._userId, email: req.body.email }).then(user => {
+        if (!user) {
+          errors.email = "We were unable to find a user for this token";
+          return res.status(400).json(errors);
+        }
+        if (user.isVerified) {
+          errors.email = "This user has already been verified";
+          return res.status(400).json(errors);
+        }
+        // Verify and save the user
+        user.isVerified = true;
+        user.save().then(user => res.json(user));
+      });
+    })
+    .catch(err => {
+      console.log(err);
     });
-  });
 });
 
 module.exports = router;
