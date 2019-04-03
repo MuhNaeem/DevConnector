@@ -11,4 +11,4 @@ const tokenSchema = new Schema({
   createdAt: { type: Date, required: true, default: Date.now, expires: 43200 }
 });
 
-module.exports = Veri = mongoose.model("veri", tokenSchema);
+module.exports = Veri = mongoose.model("verification", tokenSchema);
