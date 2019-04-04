@@ -88,8 +88,8 @@ router.post("/register", (req, res) => {
                 text:
                   "Hello,\n\n" +
                   "Please verify your account by clicking the link:  \n" +
-                  " https://" +
-                  req.headers.host +
+                  " http://localhost:3000" +
+                  //req.headers.host +
                   "/confirmation/" +
                   token.token +
                   "\n"
