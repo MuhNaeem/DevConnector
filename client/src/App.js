@@ -28,6 +28,7 @@ import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
 import NotFound from "./components/not-found/NotFound";
+import ScreenShare from "./components/screenShare/screen-share";
 
 import "./App.css";
 
@@ -63,6 +64,7 @@ class App extends Component {
             <div className="container">
               <Route exact path="/register" component={Register} />
               <Route exact path="/Verify" component={Verify} />
+              <Route exact path="/ScreenShare" component={ScreenShare} />
               <Route
                 exact
                 path="/confirmation/:token"

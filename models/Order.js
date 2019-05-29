@@ -3,9 +3,18 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const OrderSchema = new Schema({
-  user: {
+  freelancer: {
     type: Schema.Types.ObjectId,
     ref: "users"
+  },
+  client: {
+    type: Schema.Types.ObjectId,
+    ref: "users"
+  },
+  status: {
+    type: String,
+    required: true,
+    default: "Ongoing"
   },
   text: {
     type: String,
@@ -26,24 +35,24 @@ const OrderSchema = new Schema({
     required: true
   },
 
-  client: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      },
-      text: {
-        type: String,
-        required: true
-      },
-      name: {
-        type: String
-      },
-      avatar: {
-        type: String
-      }
-    }
-  ],
+  // client: [
+  //   {
+  //     user: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: "users"
+  //     },
+  //     text: {
+  //       type: String,
+  //       required: true
+  //     },
+  //     name: {
+  //       type: String
+  //     },
+  //     avatar: {
+  //       type: String
+  //     }
+  //   }
+  // ],
   date: {
     type: Date,
     default: Date.now

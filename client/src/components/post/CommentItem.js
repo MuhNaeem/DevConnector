@@ -2,10 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { deleteComment } from "../../actions/postActions";
+import { addOrder } from "../../actions/orderActions";
 
 class CommentItem extends Component {
   onDeleteClick(postId, commentId) {
     this.props.deleteComment(postId, commentId);
+  }
+
+  onOrderClick(postId, commentId) {
+    console.log("order sent");
+    this.props.addOrder(postId, commentId);
   }
 
   // findUserSent(likes) {
@@ -56,6 +62,14 @@ class CommentItem extends Component {
                 <i className="fas fa-times" />
               </button>
             ) : null}
+
+            <button
+              onClick={this.onOrderClick.bind(this, postId, comment._id)}
+              type="button"
+              className="btn btn-danger mr-1"
+            >
+              Accept Proposal
+            </button>
           </div>
         </div>
       </div>
@@ -65,6 +79,8 @@ class CommentItem extends Component {
 
 CommentItem.propTypes = {
   deleteComment: PropTypes.func.isRequired,
+  addOrder: PropTypes.func.isRequired,
+  // post: PropTypes.object.isRequired,
   comment: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
   auth: PropTypes.object.isRequired
@@ -76,5 +92,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { deleteComment }
+  { deleteComment, addOrder }
 )(CommentItem);
